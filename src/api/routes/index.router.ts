@@ -40,11 +40,11 @@ const telemetry = new Telemetry();
 
 const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 
-if (!serverConfig.DISABLE_MANAGER) router.use('/manager', new ViewsRouter().router);
+if (!serverConfig.DISABLE_MANAGER) router.use('/admin/manager', new ViewsRouter().router);
 
 router.get('/assets/*', (req, res) => {
   const fileName = req.params[0];
-  const basePath = path.join(process.cwd(), 'manager', 'dist');
+  const basePath = path.join(process.cwd(), 'admin', 'manager', 'dist');
 
   const filePath = path.join(basePath, 'assets/', fileName);
 
@@ -62,11 +62,9 @@ router
   .get('/', (req, res) => {
     res.status(HttpStatus.OK).json({
       status: HttpStatus.OK,
-      message: 'Welcome to the Evolution API, it is working!',
+      message: 'Wppfy API',
       version: packageJson.version,
-      clientName: process.env.DATABASE_CONNECTION_CLIENT_NAME,
-      manager: !serverConfig.DISABLE_MANAGER ? `${req.protocol}://${req.get('host')}/manager` : undefined,
-      documentation: `https://doc.evolution-api.com`,
+      documentation: `https://wppfy.com/docs`,
     });
   })
   .post('/verify-creds', authGuard['apikey'], async (req, res) => {
