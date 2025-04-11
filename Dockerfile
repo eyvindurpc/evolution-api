@@ -7,21 +7,19 @@ LABEL version="2.2.3" description="Api to control whatsapp features through http
 LABEL maintainer="Davidson Gomes" git="https://github.com/DavidsonGomes"
 LABEL contact="contato@atendai.com"
 
+ARG GITHUB_TOKEN
+ENV GITHUB_TOKEN=${GITHUB_TOKEN}
+
 WORKDIR /evolution
 
-COPY ./package.json ./tsconfig.json ./
+# Clone the repository using the GitHub token
+RUN git clone https://${GITHUB_TOKEN}@github.com/DavidsonGomes/evolution-api.git . && \
+    git checkout main
+
+# Copy .env file
+COPY ./.env ./.env
 
 RUN npm install
-
-COPY ./src ./src
-COPY ./public ./public
-COPY ./prisma ./prisma
-COPY ./admin/manager ./admin/manager
-COPY ./.env.example ./.env
-COPY ./runWithProvider.js ./
-COPY ./tsup.config.ts ./
-
-COPY ./Docker ./Docker
 
 RUN chmod +x ./Docker/scripts/* && dos2unix ./Docker/scripts/*
 
