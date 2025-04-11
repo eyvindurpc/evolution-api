@@ -64,6 +64,7 @@ router
       status: HttpStatus.OK,
       message: 'Wppfy API',
       documentation: `https://wppfy.com/docs`,
+      version: "1.0.1"
     });
   })
   .post('/verify-creds', authGuard['apikey'], async (req, res) => {
