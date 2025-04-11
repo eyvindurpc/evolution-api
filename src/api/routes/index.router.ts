@@ -63,7 +63,6 @@ router
     res.status(HttpStatus.OK).json({
       status: HttpStatus.OK,
       message: 'Wppfy API',
-      version: packageJson.version,
       documentation: `https://wppfy.com/docs`,
     });
   })
